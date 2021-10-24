@@ -9055,6 +9055,8 @@ exports.bookTour = void 0;
 
 var _axios = _interopRequireDefault(require("axios"));
 
+var _alert = require("./alert");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -9071,19 +9073,32 @@ var bookTour = /*#__PURE__*/function () {
       while (1) {
         switch (_context.prev = _context.next) {
           case 0:
-            _context.next = 2;
+            _context.prev = 0;
+            _context.next = 3;
             return (0, _axios.default)("".concat(URL, "/api/v1/bookings/checkout-session/").concat(tourId));
 
-          case 2:
+          case 3:
             session = _context.sent;
-            console.log('session', session); // Create checkout form + charge card
+            _context.next = 6;
+            return stripe.redirectToCheckout({
+              sessionId: session.data.session.id
+            });
 
-          case 4:
+          case 6:
+            _context.next = 11;
+            break;
+
+          case 8:
+            _context.prev = 8;
+            _context.t0 = _context["catch"](0);
+            (0, _alert.showAlert)('error', _context.t0.message);
+
+          case 11:
           case "end":
             return _context.stop();
         }
       }
-    }, _callee);
+    }, _callee, null, [[0, 8]]);
   }));
 
   return function bookTour(_x) {
@@ -9092,7 +9107,7 @@ var bookTour = /*#__PURE__*/function () {
 }();
 
 exports.bookTour = bookTour;
-},{"axios":"../../node_modules/axios/index.js"}],"index.js":[function(require,module,exports) {
+},{"axios":"../../node_modules/axios/index.js","./alert":"alert.js"}],"index.js":[function(require,module,exports) {
 "use strict";
 
 require("core-js/modules/es6.array.copy-within.js");
@@ -9448,7 +9463,7 @@ if (userPasswordForm) {
 
 if (bookBtn) {
   bookBtn.addEventListener('click', function (e) {
-    e.target.textContent = 'processing...';
+    e.target.textContent = 'Processing...';
     var tourId = e.target.dataset.tourId;
     (0, _stripe.bookTour)(tourId);
   });
@@ -9481,7 +9496,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "56784" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "52214" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
