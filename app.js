@@ -7,6 +7,7 @@ const mongoSanitaize = require('express-mongo-sanitize');
 const xss = require('xss-clean');
 const hpp = require('hpp');
 const cookieParser = require('cookie-parser');
+const compression = require('compression');
 
 const AppError = require('./utils/appError');
 const globalErrorHandler = require('./controllers/errorController');
@@ -30,6 +31,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 // SET Security HTTP headers
 app.use(helmet());
 // app.use(cors());
+
+// Compressing text file before sending to client
+app.use(compression());
 
 
 // Development Logging
@@ -69,11 +73,12 @@ app.use(hpp({
 // Test middleware (Optional)
 app.use((req,res, next)=>{
     req.requestTime = new Date().toISOString();
+    if(process.env.NODE_ENV === 'development'){
     res.setHeader('Content-Security-Policy', 
     'script-src-elem http://localhost:3000/js/bundle.js https://api.mapbox.com/mapbox-gl-js/v0.54.0/mapbox-gl.js https://js.stripe.com/v3/');
     res.setHeader('Content-Security-Policy', 
     'style-src-elem http://localhost:3000/css/style.css https://api.mapbox.com/mapbox-gl-js/v0.54.0/mapbox-gl.css');
-
+    }
     res.header('Access-Control-Allow-Origin', req.headers.origin);
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     next();

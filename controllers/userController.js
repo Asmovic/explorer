@@ -18,7 +18,7 @@ const factory = require('./handlerFactory');
 const multerStorage = multer.memoryStorage();
 
 const multerFilter = (req,file,cb)=>{
-    console.log('filtering...', file);
+    //console.log('filtering...', file);
     if(file.mimetype.startsWith('image')){
        cb(null, true);
     } else{
@@ -34,9 +34,7 @@ const upload = multer({
 exports.uploadUserPhoto = upload.single('photo');
 
 exports.resizeUserPhoto = catchAsync(async (req,res,next)=>{
-    console.log('resizing func.......', req.file);
     if(!req.file) return next();
-    console.log('resizing.......');
     req.file.filename = `user-${req.user.id}-${Date.now()}.jpeg`;
 
     await sharp(req.file.buffer)
@@ -64,13 +62,12 @@ exports.getMe = (req, res, next) => {
 
 
 exports.updateMe = catchAsync(async (req,res,next) => {
-    console.log('multer...', req.file, req.body);
+    // console.log('multer...', req.file, req.body);
     const { password, confirmPassword } = req.body;
     // 1) Create error if user post password data
     if(password || confirmPassword) {
         return next(new AppError('This route is not for password updates. Please use /updateMyPassword route'));
     }
-
     // 2) Filtered out unwanted fields.
     const filteredBody = filterObj(req.body, 'name', 'email');
     if (req.file) filteredBody.photo = req.file.filename;

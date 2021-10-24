@@ -8771,8 +8771,6 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
-var URL = 'http://localhost:3000';
-
 var login = /*#__PURE__*/function () {
   var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(email, password) {
     var result;
@@ -8784,7 +8782,7 @@ var login = /*#__PURE__*/function () {
             _context.next = 3;
             return (0, _axios.default)({
               method: 'POST',
-              url: "".concat(URL, "/api/v1/users/login"),
+              url: "/api/v1/users/login",
               data: {
                 email: email,
                 password: password
@@ -8833,33 +8831,31 @@ var logout = /*#__PURE__*/function () {
       while (1) {
         switch (_context2.prev = _context2.next) {
           case 0:
-            console.log('Entered Logout');
-            _context2.prev = 1;
-            _context2.next = 4;
+            _context2.prev = 0;
+            _context2.next = 3;
             return (0, _axios.default)({
               method: 'GET',
-              url: "".concat(URL, "/api/v1/users/logout")
+              url: "/api/v1/users/logout"
             });
 
-          case 4:
+          case 3:
             _res = _context2.sent;
-            console.log('data....', _res);
             if (_res.data.status === 'success') location.reload(true);
-            _context2.next = 13;
+            _context2.next = 11;
             break;
 
-          case 9:
-            _context2.prev = 9;
-            _context2.t0 = _context2["catch"](1);
+          case 7:
+            _context2.prev = 7;
+            _context2.t0 = _context2["catch"](0);
             console.log('error...', _context2.t0);
             (0, _alert.showAlert)('error', 'Error logging user out. Try again!!!');
 
-          case 13:
+          case 11:
           case "end":
             return _context2.stop();
         }
       }
-    }, _callee2, null, [[1, 9]]);
+    }, _callee2, null, [[0, 7]]);
   }));
 
   return function logout(_x3, _x4) {
@@ -8976,8 +8972,7 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
-var URL = 'http://localhost:3000'; // - type is either 'password' || 'data'
-
+// - type is either 'password' || 'data'
 var updateSettings = /*#__PURE__*/function () {
   var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(data, type) {
     var res;
@@ -8996,8 +8991,7 @@ var updateSettings = /*#__PURE__*/function () {
             _context.next = 5;
             return (0, _axios.default)({
               method: 'PATCH',
-              headers: data.getHeaders(),
-              url: "".concat(URL, "/api/v1/users/updateMe"),
+              url: "/api/v1/users/updateMe",
               data: data
             });
 
@@ -9010,7 +9004,7 @@ var updateSettings = /*#__PURE__*/function () {
             _context.next = 10;
             return (0, _axios.default)({
               method: 'PATCH',
-              url: "".concat(URL, "/api/v1/users/updateMyPassword"),
+              url: "/api/v1/users/updateMyPassword",
               data: data
             });
 
@@ -9019,7 +9013,6 @@ var updateSettings = /*#__PURE__*/function () {
 
           case 11:
             if (res.data.status === 'success') {
-              console.log('updating.... showAlert');
               (0, _alert.showAlert)('success', "".concat(type.toUpperCase(), " updated successfully!!!"));
             }
 
@@ -9064,7 +9057,6 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
 var stripe = Stripe('pk_test_51JmMF0DH2H6rPT87fhVzUJndhWdOfDDSpPJbcksx2G212bMRXN9bLP26QXdjaHULisisnUJUDzNcXIUOZvIQQfYt00xc4RNtcz');
-var URL = 'http://localhost:3000';
 
 var bookTour = /*#__PURE__*/function () {
   var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(tourId) {
@@ -9075,7 +9067,7 @@ var bookTour = /*#__PURE__*/function () {
           case 0:
             _context.prev = 0;
             _context.next = 3;
-            return (0, _axios.default)("".concat(URL, "/api/v1/bookings/checkout-session/").concat(tourId));
+            return (0, _axios.default)("/api/v1/bookings/checkout-session/".concat(tourId));
 
           case 3:
             session = _context.sent;
@@ -9411,12 +9403,10 @@ if (logoutBtn) {
 if (userDataForm) {
   userDataForm.addEventListener('submit', function (ev) {
     ev.preventDefault();
-    console.log('Entrance...');
     var form = new FormData();
     form.append('name', document.getElementById('name').value);
     form.append('email', document.getElementById('email').value);
     form.append('photo', document.getElementById('photo').files[0]);
-    console.log('form........', form);
     (0, _updateSettings.updateSettings)(form, 'data');
   });
 }
@@ -9496,7 +9486,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "52214" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "53858" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

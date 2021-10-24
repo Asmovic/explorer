@@ -12,7 +12,7 @@ const AppError = require('../utils/appError');
 const multerStorage = multer.memoryStorage();
 
 const multerFilter = (req, file, cb) => {
-    console.log('filtering...', file);
+    // console.log('filtering...', file);
     if (file.mimetype.startsWith('image')) {
         cb(null, true);
     } else {
@@ -56,9 +56,6 @@ exports.resizeTourImages = catchAsync(async (req, res, next) => {
             .toFile(`public/img/tours/${fileName}`);
         req.body.images.push(fileName);
     }));
-    console.log('images.....', req.body);
-
-
     next();
 })
 

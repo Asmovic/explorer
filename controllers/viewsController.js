@@ -64,7 +64,7 @@ exports.getMyTours = catchAsync(async (req,res,next)=>{
 });
 
 exports.updateUserAccount = async (req,res)=>{
-    console.log('updating.....', req.body.name, req.body.email);
+    // console.log('updating.....', req.body.name, req.body.email);
     const updatedUser = await User.findByIdAndUpdate(req.user.id, { 
         name: req.body.name,
         email: req.body.email

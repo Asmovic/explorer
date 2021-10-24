@@ -43,7 +43,7 @@ exports.signup = catchAsync(async (req, res, next) => {
     });
     
     const url = `${req.protocol}://${req.get('host')}/me`;
-    console.log(url);
+    //console.log(url);
     await new Email(newUser, url).sendWelcome();
 
     createAndSendToken(newUser, 201, res);
@@ -51,7 +51,7 @@ exports.signup = catchAsync(async (req, res, next) => {
 
 exports.login = catchAsync(async (req,res,next)=>{
     const { email, password } = req.body;
-    console.log('login credentials...', email, password);
+    //console.log('login credentials...', email, password);
     if(!email || !password){
        return next(new AppError(`Please enter your email and password`, 400));
     }
@@ -67,7 +67,6 @@ exports.login = catchAsync(async (req,res,next)=>{
 });
 
 exports.logout = (req,res,next) => {
-    console.log('logging out....');
     res.cookie('jwt', 'loggedout', {
         expires: new Date(Date.now() + 5 * 1000),
         httpOnly: true

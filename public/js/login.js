@@ -1,13 +1,12 @@
 import axios from 'axios';
 import { showAlert } from './alert';
 
-const URL = 'http://localhost:3000';
 
 export const login = async (email, password) => {
     try{
         const result = await axios({
             method: 'POST',
-            url: `${URL}/api/v1/users/login`,
+            url: `/api/v1/users/login`,
             data: {
                 email,
                 password
@@ -27,13 +26,12 @@ export const login = async (email, password) => {
 }
 
 export const logout = async (req, res) => {
-    console.log('Entered Logout');
     try{
         const res = await axios({
             method: 'GET',
-            url: `${URL}/api/v1/users/logout`,
+            url: `/api/v1/users/logout`,
         });
-        console.log('data....', res);
+
         if(res.data.status === 'success') location.reload(true);
     } catch (err){
         console.log('error...', err);
