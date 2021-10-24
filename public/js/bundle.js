@@ -8916,7 +8916,7 @@ Object.defineProperty(exports, "__esModule", {
 exports.displayMap = void 0;
 
 /* eslint-disable */
-var displayMap = function displayMap(location) {
+var displayMap = function displayMap(locations) {
   mapboxgl.accessToken = 'pk.eyJ1IjoiYXNtb3ZpYyIsImEiOiJja3VtcmpyZngwZGlkMnZvYWRsNzY4MG4zIn0.t2H1QjoulaBBrUAxpgE7ow';
   var map = new mapboxgl.Map({
     container: 'map',
@@ -9384,7 +9384,7 @@ var bookBtn = document.getElementById('book-tour'); // DELEGATION
 
 if (mapBox) {
   var locations = JSON.parse(mapBox.dataset.locations);
-  /* displayMap(locations); */
+  (0, _mapBox.displayMap)(locations);
 }
 
 if (loginForm) {

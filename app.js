@@ -73,12 +73,10 @@ app.use(hpp({
 // Test middleware (Optional)
 app.use((req,res, next)=>{
     req.requestTime = new Date().toISOString();
-    if(process.env.NODE_ENV === 'development'){
+/*     res.setHeader('Content-Security-Policy', 
+    'script-src-elem https://api.mapbox.com/mapbox-gl-js/v2.3.1/mapbox-gl.js'); */
     res.setHeader('Content-Security-Policy', 
-    'script-src-elem http://localhost:3000/js/bundle.js https://api.mapbox.com/mapbox-gl-js/v0.54.0/mapbox-gl.js https://js.stripe.com/v3/');
-    res.setHeader('Content-Security-Policy', 
-    'style-src-elem http://localhost:3000/css/style.css https://api.mapbox.com/mapbox-gl-js/v0.54.0/mapbox-gl.css');
-    }
+    'style-src-elem http://localhost:3000/css/style.css https://api.mapbox.com/mapbox-gl-js/v2.3.1/mapbox-gl.css https://fonts.googleapis.com/');
     res.header('Access-Control-Allow-Origin', req.headers.origin);
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     next();
