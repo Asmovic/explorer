@@ -75,9 +75,9 @@ app.use((req,res, next)=>{
     req.requestTime = new Date().toISOString();
 /*     res.setHeader('Content-Security-Policy', 
     'script-src-elem https://api.mapbox.com/mapbox-gl-js/v2.3.1/mapbox-gl.js'); */
-    const style = req.protocol + '://' + req.get('host') + req.originalUrl;
+    const style = req.protocol + '://' + req.get('host');
     res.setHeader('Content-Security-Policy', 
-    `style-src-elem https://api.mapbox.com/mapbox-gl-js/v2.3.1/mapbox-gl.css https://fonts.googleapis.com/ ${style}css/style.css`);
+    `style-src-elem https://api.mapbox.com/mapbox-gl-js/v2.3.1/mapbox-gl.css https://fonts.googleapis.com/ ${style}/css/style.css`);
     res.header('Access-Control-Allow-Origin', req.headers.origin);
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     next();
