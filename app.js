@@ -18,12 +18,10 @@ const bookingRouter = require('./routers/bookingRoutes');
 const viewRoutes = require('./routers/viewRoutes');
 
 const app = express();
-
 app.set('view engine', 'pug'); 
 app.set('views', path.join(__dirname, 'views'));
 
 // Global middlewares
-
 // Serving static files
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -75,8 +73,9 @@ app.use((req,res, next)=>{
     req.requestTime = new Date().toISOString();
 /*     res.setHeader('Content-Security-Policy', 
     'script-src-elem https://api.mapbox.com/mapbox-gl-js/v2.3.1/mapbox-gl.js'); */
+    const style = req.protocol + '://' + req.get('host') + req.originalUrl;
     res.setHeader('Content-Security-Policy', 
-    'style-src-elem http://localhost:3000/css/style.css https://api.mapbox.com/mapbox-gl-js/v2.3.1/mapbox-gl.css https://fonts.googleapis.com/');
+    `style-src-elem https://api.mapbox.com/mapbox-gl-js/v2.3.1/mapbox-gl.css https://fonts.googleapis.com/ ${style}css/style.css`);
     res.header('Access-Control-Allow-Origin', req.headers.origin);
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     next();
