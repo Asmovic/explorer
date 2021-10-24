@@ -14,16 +14,21 @@ const expiredDate = process.env.JWT_EXPIRES_IN;
         expiresIn: expiredDate
     });
 
-    const createAndSendToken = (user, statusCode, res) => {
+    const createAndSendToken = (user, statusCode, req, res) => {
         const token = signToken(user._id);
-        const cookieOptions =  {
+/*         const cookieOptions =  {
             expires: new Date( Date.now() + (30 * 24 * 60 * 60 * 1000)),
             secure: false, // This will make sure the cookie is send only on encrypted connection (https)
-            httpOnly: true // This will ensure the cookie can not be modified or access in any way by the browser
+            httpOnly: true, // This will ensure the cookie can not be modified or access in any way by the browser
+            secure: req.secure || req.headers['x-forwarded-proto'] === 'https'
         }
-        if(process.env.NODE_ENV === 'production') cookieOptions.secure = true;
-
-     res.cookie('jwt', token, cookieOptions);
+ */
+     res.cookie('jwt', token, {
+        expires: new Date( Date.now() + (30 * 24 * 60 * 60 * 1000)),
+        secure: false, // This will make sure the cookie is send only on encrypted connection (https)
+        httpOnly: true, // This will ensure the cookie can not be modified or access in any way by the browser
+        secure: req.secure || req.headers['x-forwarded-proto'] === 'https'
+    });
      res.status(statusCode).json({
          status: "success",
          token,
@@ -46,7 +51,7 @@ exports.signup = catchAsync(async (req, res, next) => {
     //console.log(url);
     await new Email(newUser, url).sendWelcome();
 
-    createAndSendToken(newUser, 201, res);
+    createAndSendToken(newUser, 201, req, res);
 });
 
 exports.login = catchAsync(async (req,res,next)=>{
@@ -62,7 +67,7 @@ exports.login = catchAsync(async (req,res,next)=>{
         return next(new AppError('Invalid email or password'), 401);
      }
 
-     createAndSendToken(user, 200, res);
+     createAndSendToken(user, 200, req, res);
 
 });
 
@@ -195,7 +200,7 @@ exports.resetPassword = catchAsync( async (req,res,next)=>{
 
     // Log the user in, send JWT
     
-    createAndSendToken(user, 200, res);
+    createAndSendToken(user, 200, req, res);
     
 });
 
@@ -216,6 +221,6 @@ exports.updatePassword = catchAsync(async (req,res,next) => {
 
     // 4) Log user in, send JWT
     
-    createAndSendToken(user, 200, res);
+    createAndSendToken(user, 200, req, res);
 })
 
