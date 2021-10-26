@@ -4,6 +4,7 @@ import { login, logout } from './login';
 import { displayMap } from './mapBox';
 import { updateSettings } from './updateSettings';
 import { bookTour } from './stripe';
+import { showAlert } from './alert';
 
 // DOM elements for
 const mapBox = document.getElementById('map');
@@ -12,6 +13,7 @@ const logoutBtn = document.querySelector('.nav__el--logout');
 const userDataForm = document.querySelector('.form-user-data');
 const userPasswordForm = document.querySelector('.form-user-password');
 const bookBtn = document.getElementById('book-tour');
+const alertMessage = document.querySelector('body').dataset.alert;
 
 // DELEGATION
 if(mapBox){
@@ -66,3 +68,5 @@ if(bookBtn){
         bookTour(tourId);
     })
 }
+
+if(alertMessage) showAlert('success', alertMessage, 20);

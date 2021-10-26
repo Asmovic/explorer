@@ -77,3 +77,12 @@ exports.updateUserAccount = async (req,res)=>{
         user: updatedUser
     })
 }
+
+exports.alerts = (req,res,next)=>{
+    const { alert } = req.query;
+    if (alert === 'booking'){
+        req.locals.alert = "your booking was successful! " +
+        "Please ckeck your email for a comfirmation. If your booking doesn't show up here immediately, please come back later.";
+    }
+    next();
+}
