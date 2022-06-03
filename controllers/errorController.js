@@ -41,9 +41,7 @@ const sendErrorDev = (err, req, res)=> {
     return res.status(err.statusCode).render('error', {
         title: 'Something went Wrong',
         msg: err.message
-    })
-    
-    
+    })  
 };
 
 const sendErrorProd =(err, req, res)=>{
@@ -51,7 +49,7 @@ const sendErrorProd =(err, req, res)=>{
     if(req.originalUrl.startsWith('/api')){
     // A) Operational error, trusted error: send message to client
         if(err.isOperational){
-            res.status(err.statusCode).json({
+            return res.status(err.statusCode).json({
                 status: err.status,
                 message: err.message
         });

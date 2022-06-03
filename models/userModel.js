@@ -40,7 +40,7 @@ const userSchema = new Schema({
             validator: function(el){
                 return el === this.password
             },
-            messagee: "Passwords are not the same"
+            message: "Passwords are not the same"
         }
     },
     passwordChangedAt: Date,

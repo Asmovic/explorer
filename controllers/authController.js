@@ -25,9 +25,8 @@ const expiredDate = process.env.JWT_EXPIRES_IN;
  */
      res.cookie('jwt', token, {
         expires: new Date( Date.now() + (30 * 24 * 60 * 60 * 1000)),
-        secure: false, // This will make sure the cookie is send only on encrypted connection (https)
-        httpOnly: true, // This will ensure the cookie can not be modified or access in any way by the browser
-        secure: req.secure || req.headers['x-forwarded-proto'] === 'https'
+        httpOnly: true,
+        secure: req.secure || req.headers['x-forwarded-proto'] === 'https' // This will make sure the cookie is send only on encrypted connection (https)
     });
      res.status(statusCode).json({
          status: "success",
