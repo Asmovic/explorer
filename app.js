@@ -40,7 +40,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(helmet());
 // app.use(cors());
 
-// Compressing text file before sending to client
+// Compressing text file before sending to client.
 app.use(compression());
 
 
