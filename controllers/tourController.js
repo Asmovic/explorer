@@ -102,6 +102,7 @@ exports.getTourStats = catchAsync(async (req, res, next) => {
     })
 });
 
+// Monthly Plan
 exports.getMonthlyPlan = catchAsync(async (req, res, next) => {
     const year = req.params.year * 1;
 
